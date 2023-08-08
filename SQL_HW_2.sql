@@ -72,7 +72,7 @@ select name from students
 where id >= 137;
 --24. Вывести пользователя у которых id больше 180 но меньше 190
 select name from students
-where id >= 137;
+where id > 180 and id < 190;
 --25. Вывести пользователя у которых id между 180 и 190 
 select name from students
 where id between 180 and 190;
@@ -83,11 +83,9 @@ where password in ('12333', '1m313', '123313');
 select name from students
 where created_on in ('2020-10-03 00:00:00', '2021-05-19 00:00:00', '2021-03-26 00:00:00');
 --28. Вывести минимальный id
-select name from students
-where id = (select min(id) from students);
+select min(id) from students;
 --29. Вывести максимальный. 
-select name from students
-where id = (select max(id) from students); 
+select max(id) from students; 
 --30. Вывести количество пользователей
 select count(name) from students;
 --31. Вывести id пользователя, имя, дату создания пользователя. Отсортировать по порядку возрастания даты добавления пользоватлеля.
