@@ -8,30 +8,27 @@ select employee_name, monthly_salary from employees
 		join salary on salary.id = employee_salary.salary_id
 where monthly_salary < 2000;
 -- 3. Вывести все зарплатные позиции, но работник по ним не назначен. (ЗП есть, но не понятно кто её получает.)
-select employee_salary.id from employee_salary 
-		join salary on salary.id = employee_salary.salary_id
-		left join roles_employee using (employee_id)
-		left join employees on employees.id = roles_employee.employee_id
+select employee_salary.id, employee_name, monthly_salary from salary 
+		join employee_salary on salary.id = employee_salary.salary_id
+		left join employees on employees.id = employee_id
 where employee_name is null										
 order by employee_salary.id;
 -- 4. Вывести все зарплатные позиции  меньше 2000 но работник по ним не назначен. (ЗП есть, но не понятно кто её получает.)
-select employee_salary.id from employee_salary 
-		join salary on salary.id = employee_salary.salary_id
-		left join roles_employee using (employee_id)
-		left join employees on employees.id = roles_employee.employee_id
-where employee_name is null and monthly_salary < 2000;
+select employee_salary.id, employee_name, monthly_salary from salary 
+		join employee_salary on salary.id = employee_salary.salary_id
+		left join employees on employees.id = employee_id
+where employee_name is null and monthly_salary < 2000
+order by employee_salary.id;
 -- 5. Найти всех работников кому не начислена ЗП.
-select employee_name from employee_salary 
-		join salary on salary.id = employee_salary.salary_id
-		right join roles_employee using (employee_id)
-		join employees on employees.id = roles_employee.employee_id
-where monthly_salary is null
+select employee_name, salary_id from employees 
+		left join employee_salary on employees.id = employee_id
+where salary_id is null
 order by employee_name;
 -- 6. Вывести всех работников с названиями их должности.
 select employee_name, role_name from employees	
 		join roles_employee on roles_employee.employee_id = employees.id
 		join roles on roles.id = roles_employee.role_id
-order by employee_name;																											
+order by employee_name;				
 -- 7. Вывести имена и должность только Java разработчиков.
 select employee_name, role_name from employees	
 		join roles_employee on roles_employee.employee_id = employees.id
